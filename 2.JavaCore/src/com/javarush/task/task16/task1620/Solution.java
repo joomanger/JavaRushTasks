@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /* 
-Один для всех, все - для одного
+Один для всех, все - для одного 1234
 */
 
 public class Solution {
