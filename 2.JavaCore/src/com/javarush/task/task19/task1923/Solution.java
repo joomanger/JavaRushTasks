@@ -1,7 +1,7 @@
-package com.javarush.task.task19.task1925;
+package com.javarush.task.task19.task1923;
 
 /* 
-Длинные слова
+Слова с цифрами
 */
 
 import java.io.BufferedReader;
@@ -9,6 +9,8 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Solution {
     public static void main(String[] args) throws Exception {
@@ -19,20 +21,23 @@ public class Solution {
         String line;
         while((line=br.readLine())!=null){
             StringTokenizer st = new StringTokenizer(line, " ");
+            Pattern p = Pattern.compile("\\d+");
+            Matcher m;
             while (st.hasMoreElements()) {
+
                 String val = st.nextElement().toString();
-                if (val.length() > 6) {
+                m = p.matcher(val);
+                if (m.find()) {
                     sb.append(val);
-                    sb.append(",");
+                    sb.append(" ");
                 }
             }
         }
         br.close();
-
-        String data=sb.toString();
-        String s = data.substring(0, data.length() - 1);
+      //  System.out.println(sb.toString());
+        String data=sb.toString().trim();
         BufferedWriter bw = new BufferedWriter(new FileWriter(file2));
-        bw.write(s);
+        bw.write(data);
         bw.close();
     }
 }
