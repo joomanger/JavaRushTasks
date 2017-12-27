@@ -12,8 +12,8 @@ import java.util.StringTokenizer;
 public class Solution {
     public static void main(String[] args) throws Exception {
         BufferedReader console = new BufferedReader(new InputStreamReader(System.in));
-        String fileName = //"c:/apps/test.txt";
-                console.readLine();
+        String fileName = "c:/apps/test.txt";
+                //console.readLine();
         console.close();
 
         int new_tag = 0;
@@ -24,7 +24,7 @@ public class Solution {
             }
         }
 
-        String tag = args[0];
+        String tag ="span";// args[0];
         StringBuffer bf = new StringBuffer();
         String start_tag1 = tag + " ";
         String start_tag2 = tag + ">";
