@@ -13,33 +13,27 @@ public class FileConsoleWriter {
     private FileWriter fileWriter;
 
     public FileConsoleWriter(String fileName) throws IOException {
-        //super(fileName);
         fileWriter = new FileWriter(fileName);
     }
 
     public FileConsoleWriter(String fileName, boolean append) throws IOException {
-        // super(fileName, append);
         fileWriter = new FileWriter(fileName, append);
     }
 
     public FileConsoleWriter(File file) throws IOException {
-        // super(file);
         fileWriter = new FileWriter(file);
     }
 
     public FileConsoleWriter(File file, boolean append) throws IOException {
-        // super(file, append);
         fileWriter = new FileWriter(file, append);
     }
 
     public FileConsoleWriter(FileDescriptor fd) {
-        // super(fd);
         fileWriter = new FileWriter(fd);
     }
 
     public void write(int c) throws IOException {
         fileWriter.write(c);
-        //fileWriter.write();
         System.out.println(c);
     }
 
@@ -55,14 +49,11 @@ public class FileConsoleWriter {
         } else {
             char[] var4 = new char[len];
             str.getChars(off, off + len, var4, 0);
-            //this.write((char[]) var4, 0, len);
             System.out.println(new String((char[]) var4, 0, len));
         }
-        //System.out.println();
     }
 
     public void close() throws IOException {
-        //super.close();
         fileWriter.close();
     }
 
