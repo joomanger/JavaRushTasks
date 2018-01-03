@@ -9,7 +9,7 @@ import java.io.FileDescriptor;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class FileConsoleWriter  {
+public class FileConsoleWriter {
     private FileWriter fileWriter;
 
     public FileConsoleWriter(String fileName) throws IOException {
@@ -18,22 +18,22 @@ public class FileConsoleWriter  {
     }
 
     public FileConsoleWriter(String fileName, boolean append) throws IOException {
-       // super(fileName, append);
+        // super(fileName, append);
         fileWriter = new FileWriter(fileName, append);
     }
 
     public FileConsoleWriter(File file) throws IOException {
-       // super(file);
+        // super(file);
         fileWriter = new FileWriter(file);
     }
 
     public FileConsoleWriter(File file, boolean append) throws IOException {
-       // super(file, append);
+        // super(file, append);
         fileWriter = new FileWriter(file, append);
     }
 
     public FileConsoleWriter(FileDescriptor fd) {
-       // super(fd);
+        // super(fd);
         fileWriter = new FileWriter(fd);
     }
 
