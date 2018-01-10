@@ -34,7 +34,15 @@ public class Solution implements Serializable, AutoCloseable {
         stream.close();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
+        Solution solution=new Solution("c:\\apps\\test.txt");
+        solution.writeObject("Hello");
+        solution.writeObject(new ObjectOutputStream(solution.stream));
 
+        //loading
+        FileInputStream fiStream = new FileInputStream("c:\\apps\\test.txt");
+        ObjectInputStream objectStream = new ObjectInputStream(fiStream);
+
+        Solution loadedObject = (Solution) objectStream.readObject();
     }
 }
