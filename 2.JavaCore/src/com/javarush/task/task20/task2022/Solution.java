@@ -1,15 +1,18 @@
 package com.javarush.task.task20.task2022;
 
+
 import java.io.*;
 
 /* 
 Переопределение сериализации в потоке
 */
 public class Solution implements Serializable, AutoCloseable {
-    private FileOutputStream stream;
+    private transient FileOutputStream stream;
+    private String fileName;
 
     public Solution(String fileName) throws FileNotFoundException {
         this.stream = new FileOutputStream(fileName);
+        this.fileName = fileName;
     }
 
     public void writeObject(String string) throws IOException {
@@ -20,12 +23,11 @@ public class Solution implements Serializable, AutoCloseable {
 
     private void writeObject(ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
-        out.close();
     }
 
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
-        in.close();
+        stream = new FileOutputStream(fileName, true);
     }
 
     @Override
@@ -35,14 +37,25 @@ public class Solution implements Serializable, AutoCloseable {
     }
 
     public static void main(String[] args) throws Exception {
-        Solution solution=new Solution("c:\\apps\\test.txt");
-        solution.writeObject("Hello");
-        solution.writeObject(new ObjectOutputStream(solution.stream));
+        ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();
+        ObjectOutputStream oos = new ObjectOutputStream(arrayOutputStream);
+
+        try (Solution solution = new Solution("c:\\apps\\test.txt")) {
+            solution.writeObject("Hello");
+            oos.writeObject(solution);
+        }
 
         //loading
-        FileInputStream fiStream = new FileInputStream("c:\\apps\\test.txt");
-        ObjectInputStream objectStream = new ObjectInputStream(fiStream);
+        //FileOutputStream fiStream = new FileOutputStream("c:\\apps\\test.txt", true);
+        ByteArrayInputStream arrayInputStream = new ByteArrayInputStream(arrayOutputStream.toByteArray());
+        ObjectInputStream ois = new ObjectInputStream(arrayInputStream);
 
-        Solution loadedObject = (Solution) objectStream.readObject();
+        try (Solution loadedObject = (Solution) ois.readObject()) {
+            loadedObject.writeObject("Savin");
+        }
+
+        //fiStream.close();
+
     }
 }
+
