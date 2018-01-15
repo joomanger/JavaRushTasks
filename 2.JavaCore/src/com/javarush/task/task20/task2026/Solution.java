@@ -45,7 +45,7 @@ public class Solution {
                             break;
                         }
                     }
-                    //диагональ
+                    //пометим прямоугольник
                     for (int ii = i; ii <= h; ii++) {
                         for (int jj = j; jj <= l; jj++) {
                             a[ii][jj] = -1;
