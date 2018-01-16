@@ -6,6 +6,11 @@ import java.io.File;
 Проход по дереву файлов
 */
 public class Solution {
+    //рекурсия
+    public void scan() {
+
+    }
+
     public static void main(String[] args) {
         String path = "/Work/files";
         String resultFileAbsolutePath = "/Work/result.txt";
