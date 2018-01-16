@@ -16,7 +16,7 @@ public class Solution {
                 {'m', 'l', 'p', 'r', 'r', 'h'},
                 {'p', 'o', 'e', 'e', 'j', 'j'}
         };
-        detectAllWords(crossword, "home", "same","vorg","rrmr");
+        detectAllWords(crossword, "home", "same");
         /*
 Ожидаемый результат
 home - (5, 3) - (2, 0)
@@ -32,7 +32,6 @@ same - (1, 1) - (4, 1)
 
         int idx = 0;
         if (direct.equals("RIGHT")) {
-
             try {
                 for (int yy = y; yy <= y + size - 1; yy++) {
                     // System.out.println((char) crossword[x][yy]);
@@ -47,12 +46,11 @@ same - (1, 1) - (4, 1)
                     return w;
 
                 } else {
-                    findWord(crossword, word, x, y, "DOWN");
+                    return findWord(crossword, word, x, y, "DOWN");
                 }
             } catch (ArrayIndexOutOfBoundsException ex) {
-                findWord(crossword, word, x, y, "DOWN");
+                return findWord(crossword, word, x, y, "DOWN");
             }
-
         }
 
         idx = 0;
@@ -65,7 +63,7 @@ same - (1, 1) - (4, 1)
                     System.out.println("DOWN YES");
                     Word w = new Word(word);
                     w.setStartPoint(y, x);
-                    w.setEndPoint(y, x+size-1);
+                    w.setEndPoint(y, x + size - 1);
                     return w;
                 } else {
                     return findWord(crossword, word, x, y, "LEFT");
@@ -100,25 +98,125 @@ same - (1, 1) - (4, 1)
         idx = 0;
         if (direct.equals("UP")) {
             try {
-                for (int xx = x; xx > x-size; xx--) {
+                for (int xx = x; xx > x - size; xx--) {
                     newWord[idx++] = (char) crossword[xx][y];
                 }
                 if (Arrays.equals(word.toCharArray(), newWord)) {
                     System.out.println("UP YES");
                     Word w = new Word(word);
                     w.setStartPoint(y, x);
-                    w.setEndPoint(y, x-size+1);
+                    w.setEndPoint(y, x - size + 1);
                     return w;
                     //System.out.println(w);
                 } else {
-                    //findWord(crossword, word, x, y, "LEFT");
+                    return findWord(crossword, word, x, y, "LEFT_UP");
+                    //return null;
+                }
+            } catch (ArrayIndexOutOfBoundsException ex) {
+                return findWord(crossword, word, x, y, "LEFT_UP");
+                //return null;
+            }
+
+        }
+
+        idx = 0;
+        if (direct.equals("LEFT_UP")) {
+            int xx = x;
+            int yy = y;
+            try {
+                while (true) {
+                    if (idx == size) break;
+                    char c = (char) crossword[xx--][yy--];
+                    newWord[idx++] = c;
+                }
+                if (Arrays.equals(word.toCharArray(), newWord)) {
+                    System.out.println("LEFT_UP YES");
+                    Word w = new Word(word);
+                    w.setStartPoint(y, x);
+                    w.setEndPoint(++yy, ++xx);
+                    return w;
+
+                } else {
+                    return findWord(crossword, word, x, y, "LEFT_DOWN");
+                }
+            } catch (ArrayIndexOutOfBoundsException ex) {
+                return findWord(crossword, word, x, y, "LEFT_DOWN");
+            }
+        }
+
+        idx = 0;
+        if (direct.equals("LEFT_DOWN")) {
+            int xx = x;
+            int yy = y;
+            try {
+                while (true) {
+                    if (idx == size) break;
+                    char c = (char) crossword[xx++][yy--];
+                    newWord[idx++] = c;
+                }
+                if (Arrays.equals(word.toCharArray(), newWord)) {
+                    System.out.println("LEFT_DOWN YES");
+                    Word w = new Word(word);
+                    w.setStartPoint(y, x);
+                    w.setEndPoint(++yy, --xx);
+                    return w;
+
+                } else {
+                    return findWord(crossword, word, x, y, "RIGHT_UP");
+                }
+            } catch (ArrayIndexOutOfBoundsException ex) {
+                return findWord(crossword, word, x, y, "RIGHT_UP");
+            }
+        }
+
+        idx = 0;
+        if (direct.equals("RIGHT_UP")) {
+            int xx = x;
+            int yy = y;
+            try {
+                while (true) {
+                    if (idx == size) break;
+                    char c = (char) crossword[xx--][yy++];
+                    newWord[idx++] = c;
+                }
+                if (Arrays.equals(word.toCharArray(), newWord)) {
+                    System.out.println("RIGHT_UP YES");
+                    Word w = new Word(word);
+                    w.setStartPoint(y, x);
+                    w.setEndPoint(--yy, ++xx);
+                    return w;
+
+                } else {
+                    return findWord(crossword, word, x, y, "RIGHT_DOWN");
+                }
+            } catch (ArrayIndexOutOfBoundsException ex) {
+                return findWord(crossword, word, x, y, "RIGHT_DOWN");
+            }
+        }
+
+        idx = 0;
+        if (direct.equals("RIGHT_DOWN")) {
+            int xx = x;
+            int yy = y;
+            try {
+                while (true) {
+                    if (idx == size) break;
+                    char c = (char) crossword[xx++][yy++];
+                    newWord[idx++] = c;
+                }
+                if (Arrays.equals(word.toCharArray(), newWord)) {
+                    System.out.println("RIGHT_DOWN YES");
+                    Word w = new Word(word);
+                    w.setStartPoint(y, x);
+                    w.setEndPoint(--yy, --xx);
+                    return w;
+
+                } else {
                     return null;
                 }
             } catch (ArrayIndexOutOfBoundsException ex) {
-                //findWord(crossword, word, x, y, "LEFT");
                 return null;
             }
-
         }
 
         return null;
@@ -146,10 +244,6 @@ same - (1, 1) - (4, 1)
             }
         }
 
-        for(int i=5;i>0;i--){
-            System.out.println(i);
-        }
-        //findWord(crossword, "same", 1, 1, "RIGHT");
         return list;
     }
 
